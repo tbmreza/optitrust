@@ -1,5 +1,8 @@
 FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
+# Build argument to install extra tools (hwloc, valgrind, mpi, jemalloc, fftw)
+ARG INSTALL_EXTRAS=false
+
 # Install system dependencies
 # Including libssl-dev and libev-dev for 'dream' package
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -8,6 +11,10 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     meld wget xz-utils build-essential ca-certificates \
     libc++-15-dev libc++abi-15-dev git curl m4 unzip sudo \
     libgmp-dev libssl-dev libev-dev \
+    && if [ "$INSTALL_EXTRAS" = "true" ]; then \
+    apt-get -y install --no-install-recommends \
+    hwloc valgrind libopenmpi-dev openmpi-bin libjemalloc-dev libfftw3-dev; \
+    fi \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Clang 15.0.0 exactly as specified in INSTALL.md
