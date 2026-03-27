@@ -1,0 +1,57 @@
+{
+	"name": "OptiTrust Standard Container",
+	"build": {
+		"dockerfile": "../Dockerfile",
+		"args": {
+			"INSTALL_EXTRAS": "false"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"C_Cpp.dimInactiveRegions": false,
+				"editor.minimap.enabled": false,
+				"editor.mouseWheelZoom": true,
+				"workbench.list.smoothScrolling": true,
+				"files.simpleDialog.enable": true,
+				"editor.wordWrap": "on",
+				"editor.wordWrapColumn": 100,
+				"editor.wrappingIndent": "indent",
+				"ocaml.sandbox": {
+					"kind": "opam",
+					"switch": "4.14.2+options"
+				},
+				"optitrust.enableKeybindings": true,
+				"numberedBookmarks.navigateThroughAllFiles": "replace",
+				"bookmarks.navigateThroughAllFiles": false,
+				"editor.definitionLinkOpensInPeek": false,
+				"editor.hover.enabled": false,
+				"editor.inlineSuggest.enabled": false,
+				"editor.lightbulb.enabled": false,
+				"editor.codeLens": false,
+				"editor.inlayHints.enabled": "offUnlessPressed",
+				"editor.acceptSuggestionOnCommitCharacter": false,
+				"editor.suggestOnTriggerCharacters": false,
+				"editor.quickSuggestions": {
+					"other": false,
+					"comments": false,
+					"strings": false
+				},
+				"editor.autoClosingQuotes": "never",
+				"editor.autoClosingBrackets": "never",
+				"editor.autoSurround": "never",
+				"gitlens.currentLine.enabled": false,
+				"workbench.editor.decorations.badges": false
+			},
+			"extensions": [
+				"ocamllabs.ocaml-platform",
+				"ms-vscode.cpptools",
+				"eamodio.gitlens",
+				"alefragnani.Bookmarks",
+				"alefragnani.numbered-bookmarks"
+			]
+		}
+	},
+	"postCreateCommand": "make precompile",
+	"remoteUser": "vscode"
+}
