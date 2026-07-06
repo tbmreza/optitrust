@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libc++-15-dev \
     libc++abi-15-dev \
     libx11-dev \
+    ncurses-dev \
+    autoconf \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Clang 15.0.0 from binaries
@@ -42,7 +44,7 @@ RUN update-alternatives --install /usr/bin/clang clang /opt/clang-15.0.0/bin/cla
 ENV PATH="/opt/clang-15.0.0/bin/:${PATH}"
 
 # Install opam as root
-RUN curl -fsSL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh | sh -s -- --install
+RUN printf '\n' | bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
 
 # Switch to vscode user
 USER vscode
@@ -50,7 +52,7 @@ WORKDIR /home/vscode
 
 # Initialize opam and set up the switch
 # Disable sandboxing as it often fails in Docker
-RUN opam init --disabled-shell-hook --disable-sandboxing -y \
+RUN opam init --disable-shell-hook --disable-sandboxing -y \
     && opam switch create 4.14.2+options --packages=ocaml-variants.4.14.2+options,ocaml-option-flambda \
     && opam pin add -y dune 3.18.2 \
     && opam pin add -y menhirLib 20210419 \
